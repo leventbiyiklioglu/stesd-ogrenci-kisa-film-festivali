@@ -1,8 +1,11 @@
 [
   {
+    "title": "Son Kare",
+    "director": "Levent Yılmaz",
     "film_adi": "Son Kare",
     "yonetmen": "Levent Yılmaz",
     "sure": "12 Dakika",
+    "duration": "12 Dakika",
     "link": "https://www.youtube.com/watch?v=example123"
   }
 ]
