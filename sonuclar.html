@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sonuçlar | STESD</title><meta name="description" content="Sinema ve Televizyon Eseri Sahipleri Derneği resmî web sitesi"><link rel="stylesheet" href="styles.css"></head><body>
+<header><div class="bar"><a class="marka" href="index.html"><div class="amblem">🎬</div><b>STESD<small style="display:block;font-weight:normal;font-size:.7rem;opacity:.85">Sinema ve Televizyon Eseri Sahipleri Derneği</small></b></a><nav><a href="index.html">Ana Sayfa</a><a href="hakkimizda.html">Hakkımızda</a><a href="faaliyetler.html">Faaliyetler</a><a href="uyelik.html">Üyelik</a><a href="duyurular.html">Duyurular</a><a href="yarisma.html">Yarışma</a><a href="degerlendirme.html">Değerlendirme</a><a href="filmler.html">Filmler</a><a href="juri.html" class=aktif>Jüri</a><a href="iletisim.html">İletişim</a></nav></div></header>
+<main><h2>Sonuçlar</h2>
+<div class="test-bant"><strong>TEST AMAÇLI</strong> — Sonuçları yalnızca jüri üyeleri ve yönetici görebilir. Filmler hayalidir.</div>
+<p class="kucuk"><a href="degerlendirme.html">Sonuçların nasıl hesaplandığı ve itiraz süreci için Değerlendirme ve Sonuçlandırma Usulü sayfasına bakın.</a></p>
+<div id="giris"><form id="girisForm" class="kod-form"><label>Jüri veya yönetici kodu<input id="kod" autocomplete="off" autocapitalize="characters" required></label>
+<button class="btn" type="submit" style="border:0;cursor:pointer;font-size:1.1rem">Sonuçları Göster</button><div id="girisMsj" class="mesaj"></div></form></div>
+<div id="icerik" style="display:none">
+ <p id="agirlik" class="kucuk"></p>
+ <div class="kaydirma"><table class="sonuc"><thead><tr><th>Sıra</th><th>Film</th><th>Halk oyu</th><th>Jüri ortalaması (/10)</th><th>Toplam (/100)</th></tr></thead><tbody id="govde"></tbody></table></div>
+ <p class="kucuk" style="margin-top:12px">Toplam puan: jüri ortalaması 100 üzerinden, halk oyu ise en çok oy alan filme göre 100 üzerinden hesaplanır; ayarlanan ağırlıklarla birleştirilir.</p>
+ <p style="margin-top:14px"><button type="button" id="yenile" class="kapat" style="float:none">Yenile</button> <button type="button" id="cikis" class="kapat" style="float:none">Çıkış</button> <a href="juri.html" class="kucuk">Jüri sayfası</a> · <a href="degerlendirme.html" class="kucuk">Değerlendirme ve sonuçlandırma usulü</a></p>
+</div></main>
+<footer><p>&copy; 2026 STESD - Sinema ve Televizyon Eseri Sahipleri Derneği. Tüm hakları saklıdır.</p><p>Koca Mustafapaşa Mah. Büyük Kuleli Sok., Fatih / İstanbul · 0534 499 43 01 · leventbiyiklioglu@hotmail.com</p></footer>
+<script src="oy.js"></script>
+<script>
+(function(){
+var E=STESD.el,kod='';
+var giris=document.getElementById('giris'),icerik=document.getElementById('icerik'),gm=document.getElementById('girisMsj'),govde=document.getElementById('govde');
+function cubuk(oran,jr){var d=E('div',{class:'cubuk-dolgu'+(jr?' jr':'')});d.style.width=Math.max(0,Math.min(100,oran))+'%';return E('div',{class:'cubuk-iz',style:'height:10px;margin-top:4px'},[d])}
+async function yukle(k,sessiz){
+ try{
+  var d=await STESD.api('/api/sonuclar',{headers:{'X-Kod':k}});
+  if(!d.ok){if(!sessiz)STESD.mesaj(gm,d.hata||'Giriş yapılamadı.','hata');try{sessionStorage.removeItem('stesd_kod')}catch(x){}return}
+  kod=k;try{sessionStorage.setItem('stesd_kod',k)}catch(x){}
+  giris.style.display='none';icerik.style.display='block';
+  document.getElementById('agirlik').textContent='Ağırlık: jüri %'+d.agirlik.juri+' / halk %'+d.agirlik.halk+' · Toplam halk oyu: '+d.toplamOy+' · Jüri üyesi: '+d.juriSayisi+(d.yonetici?' · (yönetici görünümü)':'');
+  govde.textContent='';
+  var maks=0;d.filmler.forEach(function(f){if(f.halkOy>maks)maks=f.halkOy});
+  d.filmler.forEach(function(f,i){
+   var film=[E('b',{text:f.baslik}),E('div',{class:'kucuk',text:[f.yonetmen,f.universite].filter(Boolean).join(' · ')})];
+   if(f.test)film.unshift(E('span',{class:'test-rozet',text:'TEST'}),document.createTextNode(' '));
+   if(f.juriSayisi>0){
+    var det=d.olcutler.map(function(o){return o.ad+': '+f.olcutOrtalama[o.anahtar]}).join(' · ');
+    film.push(E('div',{class:'kucuk',text:det}));
+   }
+   (f.yorumlar||[]).forEach(function(y){film.push(E('div',{class:'kucuk',text:'💬 '+y.juri+': '+y.yorum}))});
+   var halk=E('td',{},[E('div',{text:f.halkOy+' oy (%'+f.halkYuzde+')'}),cubuk(maks?100*f.halkOy/maks:0,false)]);
+   var juri=E('td',{},[E('div',{text:f.juriSayisi>0?f.juriOrtalama+' ('+f.juriSayisi+' jüri)':'Henüz puan yok'}),cubuk(f.juriSayisi>0?f.juriOrtalama*10:0,true)]);
+   var tr=E('tr',{class:i===0&&f.toplam>0?'birinci':''},[E('td',{class:'sayi',text:String(f.sira)}),E('td',{},film),halk,juri,E('td',{class:'sayi',text:String(f.toplam)})]);
+   govde.appendChild(tr);
+  });
+ }catch(x){if(!sessiz)STESD.mesaj(gm,x.message,'hata')}
+}
+document.getElementById('girisForm').addEventListener('submit',function(e){e.preventDefault();yukle(document.getElementById('kod').value.trim(),false)});
+document.getElementById('yenile').onclick=function(){yukle(kod,false)};
+document.getElementById('cikis').onclick=function(){try{sessionStorage.removeItem('stesd_kod')}catch(x){}location.reload()};
+var s=null;try{s=sessionStorage.getItem('stesd_kod')}catch(x){}
+if(s)yukle(s,true);
+})();
+</script></body></html>

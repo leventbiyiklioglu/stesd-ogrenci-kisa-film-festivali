@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Değerlendirme ve Sonuçlandırma Usulü | STESD</title><meta name="description" content="Sinema ve Televizyon Eseri Sahipleri Derneği resmî web sitesi"><link rel="stylesheet" href="styles.css"></head><body>
+<header><div class="bar"><a class="marka" href="index.html"><div class="amblem">🎬</div><b>STESD<small style="display:block;font-weight:normal;font-size:.7rem;opacity:.85">Sinema ve Televizyon Eseri Sahipleri Derneği</small></b></a><nav><a href="index.html">Ana Sayfa</a><a href="hakkimizda.html">Hakkımızda</a><a href="faaliyetler.html">Faaliyetler</a><a href="uyelik.html">Üyelik</a><a href="duyurular.html">Duyurular</a><a href="yarisma.html">Yarışma</a><a href="degerlendirme.html" class=aktif>Değerlendirme</a><a href="filmler.html">Filmler</a><a href="juri.html">Jüri</a><a href="iletisim.html">İletişim</a></nav></div></header>
+<main><h2>Değerlendirme ve Sonuçlandırma Usulü</h2>
+<div class="test-bant" style="background:#fff6cc"><strong>Taslak: yönetim kurulu onayı bekliyor.</strong> Bu sayfadaki usul henüz onaylanmamıştır; onaylanana kadar bağlayıcı değildir.</div>
+<p>Bu sayfa, Öğrenci Kısa Film Yarışması'nda filmlerin nasıl değerlendirileceğini ve sonuçların nasıl belirleneceğini herkesin görebileceği biçimde açıklar. Yarışma şartnamesi için <a href="yarisma.html">Yarışma sayfasına</a>, yayımlanacak sonuçlar için <a href="sonuclar.html">Sonuçlar sayfasına</a> bakın.</p>
+<div class="test-bant"><strong>TEST AMAÇLI</strong> — Sitedeki yarışma takvimi tarihleri hayalidir ve test için uydurulmuştur; gerçek değildir. Bu sayfada kesin tarih verilmemiştir; kesin tarihler yönetim kurulu onayından sonra duyurulacaktır.</div>
+
+<h2 id="on-eleme">1. Ön Eleme</h2>
+<ul class="liste">
+<li>Başvurular, şartnameye uygunluk açısından yönetim kurulu veya sekretarya tarafından kontrol edilir.</li>
+<li>Bir başvuru reddedilirse ret gerekçesi başvuru sahibine yazılı olarak bildirilir.</li>
+<li>Şartnameye uygun bulunan filmler halk oylamasına ve jüriye açılır.</li>
+</ul>
+
+<h2 id="puanlama">2. Sonuç Nasıl Hesaplanır?</h2>
+<div class="grid">
+<div class="kart"><h3>%50 Jüri</h3><p>Jüri puanı sonucun yarısını oluşturur.</p></div>
+<div class="kart"><h3>%50 Halk Oyu</h3><p>Halk oyu sonucun diğer yarısını oluşturur.</p></div>
+</div>
+<ul class="liste">
+<li>Her iki puan da 0–100 ölçeğine çevrilir (normalize edilir), sonra bu oranlarla toplanır. Oranlar sitenin ayarlarında da aynıdır (jüri %50, halk %50).</li>
+<li><b>Jüri puanı:</b> Her jüri üyesi filmi 5 ölçütte 1–10 arasında puanlar. Ölçüt puanlarının ortalaması alınır ve 0–100 ölçeğine çevrilir (10 üzerinden ortalama × 10).</li>
+<li><b>Halk puanı:</b> Filmin aldığı oy sayısı, en çok oy alan filmin oy sayısına bölünür ve 100 ile çarpılır. En çok oy alan film 100 alır.</li>
+<li><b>Toplam puan</b> = 0,5 × jüri puanı + 0,5 × halk puanı.</li>
+</ul>
+
+<h2 id="juri">3. Jüri</h2>
+<ul class="liste">
+<li>Jüri en az 3 üyeden oluşur.</li>
+<li>Jüri üyelerinin isimleri yarışma başlamadan önce duyurulur (<a href="juri.html">Jüri sayfası</a>).</li>
+<li>Her üye, kendisine ait bir film veya yakınının filminin bulunduğu durumu önceden yazılı olarak bildirir (çıkar çatışması beyanı). Böyle bir üye o filmin değerlendirmesinde yer almaz; o film için jüri dışında kalır.</li>
+<li>Her üye filmleri bağımsız olarak, diğer üyelerden habersiz puanlar.</li>
+<li>Puanlar, sonuçlar açıklanana kadar gizli tutulur.</li>
+<li>Her üyeye kişiye özel, tek kullanımlık bir bağlantı verilir; puanlama bu bağlantıyla yapılır.</li>
+<li>Sonuç açıklandığında puanlar ve jüri gerekçeleri özet olarak yayımlanır.</li>
+</ul>
+
+<h2 id="halk-oyu">4. Halk Oyu</h2>
+<ul class="liste">
+<li>Oy vermek için e-posta adresi doğrulanır.</li>
+<li>Her e-posta adresi yalnızca bir oy kullanabilir; yani toplamda tek bir filme oy verilir.</li>
+<li>Otomatik (bot) oylara karşı Cloudflare Turnstile doğrulaması kullanılır.</li>
+<li>Şüpheli veya tekrarlı oylar iptal edilir. İptal edilen oyların sayısı açıklanır.</li>
+<li>Oylamanın kapanış saati önceden ilan edilir. Kapanıştan sonra oy alınmaz.</li>
+</ul>
+<p><span class="yer">[Oylamanın kapanış tarihi ve saati: yönetim kurulu onayından sonra ilan edilecek]</span></p>
+
+<h2 id="esitlik">5. Eşitlik Durumu</h2>
+<ol class="liste">
+<li>Toplam puanları eşit olan filmlerden jüri puanı yüksek olan öne geçer.</li>
+<li>Jüri puanı da eşitse, jüri başkanının oyu ile ya da yönetim kurulunun çekeceği kura ile belirlenir. Kura, noter veya iki tanık huzurunda çekilir.</li>
+</ol>
+
+<h2 id="seffaflik">6. Şeffaflık ve İtiraz</h2>
+<ul class="liste">
+<li>Sonuçlar <a href="sonuclar.html">Sonuçlar sayfasında</a> film bazında şu bilgilerle yayımlanır: jüri ortalaması, halk oy sayısı, toplam puan ve iptal edilen oy sayısı.</li>
+<li>Sonuçlar, yayımdan sonra 3 gün itiraz süresi tanınarak kesinleşir. Bu süre dolmadan sonuçlar kesin sayılmaz.</li>
+<li>İtirazlar yönetim kurulu tarafından yazılı olarak yanıtlanır.</li>
+<li>Oy kayıtlarının anonim özeti (e-posta adresleri olmadan) isteyen herkese denetim için verilir.</li>
+</ul>
+<p><small>Not: Şu anda Sonuçlar sayfası test aşamasındadır ve yalnızca jüri üyeleri ile yönetici tarafından görülebilir; yukarıdaki herkese açık yayın, yarışma gerçek olarak başladığında uygulanacaktır.</small></p>
+
+<h2 id="kvkk">7. Kişisel Veriler</h2>
+<ul class="liste">
+<li>Oy verenlerin e-posta adresleri yalnızca doğrulama için kullanılır.</li>
+<li>E-posta adresi düz metin olarak değil, şifreli özet (hash) olarak saklanır.</li>
+<li>Bu veriler yarışma bittikten sonra silinir.</li>
+<li>Aydınlatma metni oy ekranında gösterilir.</li>
+</ul>
+<p><span class="yer">[Aydınlatma metni yer tutucudur. Yayımlanmadan önce avukat teyidi gerekir.]</span></p>
+
+<h2 id="degisiklik">8. Usulün Değiştirilmesi</h2>
+<p>Yönetim kurulu bu usulü yalnızca yarışma başlamadan önce değiştirebilir. Yarışma başladıktan sonra usulde değişiklik yapılamaz.</p>
+
+<p style="margin-top:24px"><a class="btn" href="yarisma.html">Yarışma Şartnamesi</a> <a class="btn" href="sonuclar.html">Sonuçlar</a></p>
+</main>
+
+<footer><p>&copy; 2026 STESD - Sinema ve Televizyon Eseri Sahipleri Derneği. Tüm hakları saklıdır.</p><p>Koca Mustafapaşa Mah. Büyük Kuleli Sok., Fatih / İstanbul · 0534 499 43 01 · leventbiyiklioglu@hotmail.com</p></footer></body></html>
