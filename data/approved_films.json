@@ -1,3 +1,16 @@
-{
-  "approved_at": "2026-10-13T22:50:49.036Z"
-}
+[
+  {
+    "id": 1,
+    "title": "Son Kare",
+    "director": "Levent Yılmaz",
+    "duration": "12 Dakika",
+    "link": "https://www.youtube.com/watch?v=example123"
+  },
+  {
+    "id": 2,
+    "title": "Gece Yolculuğu",
+    "director": "Ayşe Yılmaz",
+    "duration": "10 Dakika",
+    "link": "https://www.youtube.com/watch?v=example456"
+  }
+]
