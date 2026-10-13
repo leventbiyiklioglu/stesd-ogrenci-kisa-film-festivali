@@ -1,115 +1,95 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmler | STESD</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        .film-container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-        .film-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .film-card {
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        .film-card h3 {
-            margin-top: 0;
-            color: #0f2027;
-        }
-        .film-card p {
-            margin: 6px 0;
-            color: #4a5568;
-        }
-        .film-card a {
-            display: inline-block;
-            margin-top: 10px;
-            color: #1a73e8;
-            font-weight: bold;
-            text-decoration: none;
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="logo">
-            <h2>STESD</h2>
-            <p>Sinema ve Televizyon Eseri Sahipleri Derneği</p>
-        </div>
-        <nav>
-            <a href="index.html">ANA SAYFA</a>
-            <a href="hakkimizda.html">HAKKIMIZDA</a>
-            <a href="faaliyetler.html">FAALİYETLER</a>
-            <a href="uyelik.html">ÜYELİK</a>
-            <a href="duyurular.html">DUYURULAR</a>
-            <a href="yarisma.html">YARIŞMA</a>
-            <a href="degerlendirme.html">DEĞERLENDİRME</a>
-            <a href="filmler.html" class="active">FİLMLER</a>
-            <a href="juri.html">JÜRİ</a>
-            <a href="iletisim.html">İLETİŞİM</a>
-        </nav>
-    </header>
-
-    <main class="film-container">
-        <h1>Onaylanan Festival Filmleri</h1>
-        <hr>
-        <div id="film-listesi" class="film-grid">
-            <p>Filmler yükleniyor...</p>
-        </div>
-    </main>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const container = document.getElementById('film-listesi');
-
-            fetch('data/approved_films.json?v=' + new Date().getTime())
-                .then(res => {
-                    if (!res.ok) throw new Error('Ağ hatası');
-                    return res.json();
-                })
-                .then(data => {
-                    container.innerHTML = '';
-
-                    if (!data || data.length === 0) {
-                        container.innerHTML = '<p>Henüz onaylanmış film bulunmamaktadır.</p>';
-                        return;
-                    }
-
-                    data.forEach(film => {
-                        const title = film.title || film.film_adi || 'İsimsiz Film';
-                        const director = film.director || film.yonetmen || 'Belirtilmedi';
-                        const duration = film.duration || film.sure || '';
-                        const link = film.link || film.video_linki || '';
-
-                        const card = document.createElement('div');
-                        card.className = 'film-card';
-                        card.innerHTML = `
-                            <h3>${title}</h3>
-                            <p>🎥 <strong>Yönetmen:</strong> ${director}</p>
-                            ${duration ? `<p>⏱️ <strong>Süre:</strong> ${duration}</p>` : ''}
-                            ${link ? `<a href="${link}" target="_blank">🎬 Filmi İzle</a>` : ''}
-                        `;
-                        container.appendChild(card);
-                    });
-                })
-                .catch(err => {
-                    console.error(err);
-                    container.innerHTML = '<p style="color:red;">Filmler yüklenirken bir hata oluştu.</p>';
-                });
-        });
-    </script>
-
-</body>
-</html>
+<!DOCTYPE html><html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Filmler | STESD</title><meta name="description" content="Sinema ve Televizyon Eseri Sahipleri Derneği resmî web sitesi"><link rel="stylesheet" href="styles.css"></head><body>
+<header><div class="bar"><a class="marka" href="index.html"><div class="amblem">🎬</div><b>STESD<small style="display:block;font-weight:normal;font-size:.7rem;opacity:.85">Sinema ve Televizyon Eseri Sahipleri Derneği</small></b></a><nav><a href="index.html">Ana Sayfa</a><a href="hakkimizda.html">Hakkımızda</a><a href="faaliyetler.html">Faaliyetler</a><a href="uyelik.html">Üyelik</a><a href="duyurular.html">Duyurular</a><a href="yarisma.html">Yarışma</a><a href="degerlendirme.html">Değerlendirme</a><a href="filmler.html" class=aktif>Filmler</a><a href="juri.html">Jüri</a><a href="iletisim.html">İletişim</a></nav></div></header>
+<main><h2>Filmler</h2>
+<p>Bir filme tıklayın, izleyin; beğendiyseniz <b>Oy Ver</b> düğmesine basın. Ad veya e-posta gerekmez. Her filme bir kez oy verebilirsiniz; istediğiniz kadar filme oy verebilirsiniz.</p>
+<div class="test-bant"><strong>TEST AMAÇLI</strong> — Bu sayfa deneme sürümüdür. Listedeki filmler hayalidir; oylar yalnızca bu bilgisayardaki test sunucusunda tutulur ve resmî sonuç sayılmaz.</div>
+<div id="durum" class="mesaj">Filmler yükleniyor…</div>
+<div id="panel" class="oynatici-panel" style="display:none" aria-live="polite"></div>
+<div id="galeri" class="grid"></div>
+<h2>Halk Oylaması Sonuçları</h2>
+<p class="kucuk" id="toplam"></p>
+<div id="grafik" style="margin:16px 0 40px"></div></main>
+<footer><p>&copy; 2026 STESD - Sinema ve Televizyon Eseri Sahipleri Derneği. Tüm hakları saklıdır.</p><p>Koca Mustafapaşa Mah. Büyük Kuleli Sok., Fatih / İstanbul · 0534 499 43 01 · leventbiyiklioglu@hotmail.com</p></footer>
+<script src="oy.js"></script>
+<script>
+(function(){
+var E=STESD.el,filmler=[],sayilar={},secili=null;
+var benim={};try{(JSON.parse(localStorage.getItem('stesd_oy')||'[]')).forEach(function(i){benim[i]=1})}catch(x){}
+function kaydet(){try{localStorage.setItem('stesd_oy',JSON.stringify(Object.keys(benim)))}catch(x){}}
+var durum=document.getElementById('durum'),panel=document.getElementById('panel'),galeri=document.getElementById('galeri'),grafik=document.getElementById('grafik');
+function say(id){return sayilar[id]||0}
+function galeriCiz(){
+ galeri.textContent='';
+ filmler.forEach(function(f){
+  var ek=E('div',{class:'kucuk',text:say(f.id)+' oy'+(benim[f.id]?' · ✔ oy verdiniz':'')});
+  var k=STESD.kart(f,ek,function(){ac(f.id,true)});
+  if(f.id===secili)k.classList.add('secili');
+  galeri.appendChild(k);
+ });
+}
+function grafikCiz(){
+ grafik.textContent='';
+ var toplam=0,maks=0;filmler.forEach(function(f){toplam+=say(f.id);if(say(f.id)>maks)maks=say(f.id)});
+ document.getElementById('toplam').textContent='Toplam '+toplam+' oy.';
+ filmler.slice().sort(function(a,b){return say(b.id)-say(a.id)}).forEach(function(f){
+  var n=say(f.id),yz=toplam?Math.round(100*n/toplam):0;
+  var dolgu=E('div',{class:'cubuk-dolgu'});dolgu.style.width=(maks?100*n/maks:0)+'%';
+  grafik.appendChild(E('div',{class:'cubuk-satir'},[E('span',{text:f.baslik}),E('div',{class:'cubuk-iz'},[dolgu]),E('span',{text:n+' oy (%'+yz+')'})]));
+ });
+}
+function panelCiz(){
+ var f=filmler.filter(function(x){return x.id===secili})[0];
+ if(!f){panel.style.display='none';return}
+ var kap=E('div'),b=STESD.bilgi(f);
+ var kapat=E('button',{type:'button',class:'kapat',text:'Kapat ✕'});
+ kapat.onclick=function(){secili=null;panel.style.display='none';panel.textContent='';galeriCiz()};
+ var msj=E('div',{class:'mesaj'});
+ var buton=E('button',{type:'button',class:'oy-buton'});
+ var sayi=E('span',{class:'oy-sayisi'});
+ function guncelle(){
+  if(benim[f.id]){buton.textContent='✔ Oy verdiniz';buton.disabled=true}else{buton.textContent='👍 Oy Ver';buton.disabled=false}
+  sayi.textContent='Oy sayısı: '+say(f.id);
+ }
+ guncelle();
+ buton.onclick=async function(){
+  buton.disabled=true;
+  try{
+   var d=await STESD.post('/api/oy',{film:f.id});
+   if(d.ok||d._durum===409){benim[f.id]=1;kaydet();if(typeof d.sayi==='number')sayilar[f.id]=d.sayi;
+    STESD.mesaj(msj,d.ok?'Oyunuz kaydedildi. Teşekkürler!':'Bu filme zaten oy vermişsiniz.',d.ok?'tamam':'hata');
+    guncelle();galeriCiz();grafikCiz();}
+   else{STESD.mesaj(msj,d.hata||'Oy kaydedilemedi.','hata');buton.disabled=false}
+  }catch(x){STESD.mesaj(msj,x.message,'hata');buton.disabled=false}
+ };
+ panel.textContent='';
+ panel.appendChild(kapat);
+ if(f.test)panel.appendChild(E('span',{class:'test-rozet',text:'TEST – hayali örnek'}));
+ panel.appendChild(E('h3',{text:f.baslik,style:'color:#0b1d3a;margin-bottom:4px'}));
+ panel.appendChild(E('p',{class:'kucuk',text:b[0]+(b[1]?' — '+b[1]:'')}));
+ STESD.oynaticiKur(kap,f);panel.appendChild(kap);
+ if(f.ozet)panel.appendChild(E('p',{text:f.ozet,style:'margin-top:14px'}));
+ panel.appendChild(E('div',{class:'oy-alan'},[buton,sayi]));
+ panel.appendChild(msj);
+ panel.style.display='block';
+}
+function ac(id,kaydir){secili=id;panelCiz();galeriCiz();if(kaydir)panel.scrollIntoView({behavior:'smooth',block:'start'})}
+async function oylariYenile(){
+ var d=await STESD.api('/api/oylar');
+ if(d.ok){sayilar=d.oylar||{};(d.benim||[]).forEach(function(i){benim[i]=1});kaydet()}
+}
+async function yenile(){
+ try{await oylariYenile();galeriCiz();grafikCiz();
+  if(secili){var s=panel.querySelector('.oy-sayisi');if(s)s.textContent='Oy sayısı: '+say(secili)}}catch(x){}
+}
+(async function(){
+ try{
+  var d=await STESD.api('/api/filmler');
+  filmler=(d&&d.filmler)||[];
+  await oylariYenile();
+  durum.textContent=filmler.length?'':'Henüz film eklenmemiş.';
+  galeriCiz();grafikCiz();
+  setInterval(yenile,15000);
+ }catch(x){STESD.mesaj(durum,x.message,'hata')}
+})();
+})();
+</script></body></html>
